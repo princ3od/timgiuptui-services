@@ -1,0 +1,10 @@
+version: '3'
+services:
+  search:
+    build: .
+    environment:
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
