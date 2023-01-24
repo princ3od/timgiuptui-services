@@ -17,7 +17,9 @@ def health():
 def get_user(user_id: int):
     user = provider.get(user_id)
     if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     return user
 
 
@@ -25,7 +27,9 @@ def get_user(user_id: int):
 def create_user(user: User):
     _user = provider.get(user.id)
     if _user is not None:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists")
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail="User already exists"
+        )
     return provider.create(user)
 
 
@@ -33,7 +37,9 @@ def create_user(user: User):
 def update_user(user_id: int, user: User):
     _user = provider.get(user_id)
     if _user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     return provider.update(user_id, user)
 
 
@@ -41,5 +47,7 @@ def update_user(user_id: int, user: User):
 def delete_user(user_id: int):
     user = provider.get(user_id)
     if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     provider.delete(user_id)

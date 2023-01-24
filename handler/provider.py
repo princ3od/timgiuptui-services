@@ -5,7 +5,6 @@ from logs import logger
 
 
 class Provider:
-
     def __init__(self):
         self.data = {}
 
