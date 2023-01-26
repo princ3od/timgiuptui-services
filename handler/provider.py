@@ -1,7 +1,7 @@
 from typing import Optional
-from models import User
 
 from logs import logger
+from models import User
 
 
 class Provider:

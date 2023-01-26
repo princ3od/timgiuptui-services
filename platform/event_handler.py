@@ -1,8 +1,8 @@
 import json
-from google.cloud.pubsub_v1 import PublisherClient
 
-from constants import PubSubTopicIds, PROJECT_ID
+from constants import PROJECT_ID, PubSubTopicIds
 from database import firebase_credentials
+from google.cloud.pubsub_v1 import PublisherClient
 
 publisher = PublisherClient(credentials=firebase_credentials)
 

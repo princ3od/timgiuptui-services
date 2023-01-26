@@ -1,10 +1,10 @@
-import os
-import json
 import base64
-from google.cloud.firestore import Client
-from firebase_admin import firestore, credentials, initialize_app
-from constants import LOCAL_FIRESTORE_CREDENTIAL_PATH
+import json
+import os
 
+from constants import LOCAL_FIRESTORE_CREDENTIAL_PATH
+from firebase_admin import credentials, firestore, initialize_app
+from google.cloud.firestore import Client
 
 if not os.environ.get("FIREBASE_CRED"):
     firebase_credentials = credentials.Certificate(LOCAL_FIRESTORE_CREDENTIAL_PATH)

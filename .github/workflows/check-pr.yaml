@@ -28,7 +28,7 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Format code with black, isort and autoflake"
+          commit_message: "Format code with black, isort and autoflake [skip ci]"
           commit_options: "--no-verify"
           commit_user_name: "GitHub Actions"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"

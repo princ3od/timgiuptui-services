@@ -1,6 +1,6 @@
-from logs import logger
 from database import firestore_db
-from models import Topic, Editor, Source
+from logs import logger
+from models import Editor, Source, Topic
 
 
 class Provider:

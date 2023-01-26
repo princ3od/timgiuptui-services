@@ -1,7 +1,6 @@
-from fastapi import FastAPI, status, HTTPException
-
-from provider import Provider
+from fastapi import FastAPI, HTTPException, status
 from models import User
+from provider import Provider
 
 app = FastAPI(version="0.1.0", title="FastAPI", description="FastAPI example")
 

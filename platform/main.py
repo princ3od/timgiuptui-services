@@ -1,11 +1,10 @@
-import json
-from fastapi import FastAPI, status
 
+from constants import PubSubTopicIds
+from event_handler import pubsub_publish
+from fastapi import FastAPI, status
 from logs import logger
 from models import Source
 from provider import Provider
-from constants import PubSubTopicIds
-from event_handler import pubsub_publish
 
 app = FastAPI(version="0.1.0", title="FastAPI", description="FastAPI example")
 

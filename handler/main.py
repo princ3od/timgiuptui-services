@@ -1,7 +1,6 @@
 from flask import Flask, Response
-
-from provider import Provider
 from models import User
+from provider import Provider
 
 app = Flask(__name__)
 
