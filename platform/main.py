@@ -1,7 +1,11 @@
-from fastapi import FastAPI, status, HTTPException
+import json
+from fastapi import FastAPI, status
 
+from logs import logger
+from models import Source
 from provider import Provider
-from models import User
+from constants import PubSubTopicIds
+from event_handler import pubsub_publish
 
 app = FastAPI(version="0.1.0", title="FastAPI", description="FastAPI example")
 
@@ -13,41 +17,33 @@ def health():
     return "OK"
 
 
-@app.get("/users/{user_id}", status_code=status.HTTP_200_OK)
-def get_user(user_id: int):
-    user = provider.get(user_id)
-    if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
-    return user
+@app.get("/topics", status_code=status.HTTP_200_OK)
+def get_topics():
+    try:
+        topics = provider.get_topics()
+        return topics
+    except Exception as e:
+        logger.error(e)
+        return []
 
 
-@app.post("/users", status_code=status.HTTP_201_CREATED)
-def create_user(user: User):
-    _user = provider.get(user.id)
-    if _user is not None:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="User already exists"
-        )
-    return provider.create(user)
+@app.get("/editors", status_code=status.HTTP_200_OK)
+def get_editors():
+    try:
+        editors = provider.get_editors()
+        return editors
+    except Exception as e:
+        logger.error(e)
+        return []
 
 
-@app.put("/users/{user_id}", status_code=status.HTTP_200_OK)
-def update_user(user_id: int, user: User):
-    _user = provider.get(user_id)
-    if _user is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
-    return provider.update(user_id, user)
-
-
-@app.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user(user_id: int):
-    user = provider.get(user_id)
-    if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
-    provider.delete(user_id)
+@app.get("/crawler/sources", status_code=status.HTTP_200_OK)
+def get_sources():
+    sources: list[Source] = []
+    try:
+        sources = provider.get_sources()
+    except Exception as e:
+        logger.error(e)
+    sources_json = [source.dict() for source in sources]
+    pubsub_publish(topic=PubSubTopicIds.START_CRAWLING, data=sources_json)
+    return sources_json

@@ -1,30 +1,36 @@
-from typing import Optional
-from models import User
-
 from logs import logger
+from database import firestore_db
+from models import Topic, Editor, Source
 
 
 class Provider:
     def __init__(self):
         self.data = {}
 
-    def get(self, id: int) -> Optional[User]:
-        logger.info(f"get {id}")
-        if id in self.data:
-            return self.data[id]
-        return None
+    def get_topics(self) -> list[Topic]:
+        logger.info("Getting topics")
+        data: dict = firestore_db.collection("topics").document("content").get().to_dict()
+        topics: list[Topic] = []
+        for topic_id, topic in data:
+            topic["id"] = topic_id
+            topics.append(Topic(**topic))
+        topics = sorted(topics, key=lambda topic: topic.ordinal)
+        return topics
 
-    def create(self, model: User) -> User:
-        logger.info(f"create {model}")
-        self.data[model.id] = model
-        return model
+    def get_editors(self) -> list[Editor]:
+        logger.info("Getting editors")
+        data: dict = firestore_db.collection("editors").document("content").get().to_dict()
+        editors = []
+        for editor_id, editor in data:
+            editor["id"] = editor_id
+            editors.append(Editor(**editor))
+        return editors
 
-    def update(self, id: str, model: User) -> User:
-        logger.info(f"update {id} {model}")
-        self.data[id] = model
-        return model
-
-    def delete(self, id: str) -> None:
-        logger.info(f"delete {id}")
-        if id in self.data:
-            del self.data[id]
+    def get_sources(self) -> list[Source]:
+        logger.info("Getting sources")
+        data: dict = firestore_db.collection("sources").document("content").get().to_dict()
+        sources = []
+        for editor_id, source in data:
+            source["editor_id"] = editor_id
+            sources.append(Source(**source))
+        return sources
