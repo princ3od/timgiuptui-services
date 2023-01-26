@@ -1,10 +1,9 @@
 import json
 
 from constants import PROJECT_ID, PubSubTopicIds
-from database import firebase_credentials
 from google.cloud.pubsub_v1 import PublisherClient
 
-publisher = PublisherClient(credentials=firebase_credentials)
+publisher = PublisherClient()
 
 
 def pubsub_publish(topic: PubSubTopicIds, data: dict):
