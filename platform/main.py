@@ -1,4 +1,3 @@
-
 from constants import PubSubTopicIds
 from event_handler import pubsub_publish
 from fastapi import FastAPI, status
