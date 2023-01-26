@@ -6,6 +6,7 @@ from database import firebase_credentials
 
 publisher = PublisherClient(credentials=firebase_credentials)
 
+
 def pubsub_publish(topic: PubSubTopicIds, data: dict):
     topic_path = publisher.topic_path(PROJECT_ID, topic.value)
     str_data = json.dumps(data).encode("utf-8")

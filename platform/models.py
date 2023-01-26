@@ -6,6 +6,7 @@ class Topic(BaseModel):
     ordinal: int
     name: str
 
+
 class Editor(BaseModel):
     id: str
     name: str
@@ -25,4 +26,3 @@ class Source(BaseModel):
                 continue
             values["url"][field_name] = field_value["url"]
         return values
-            

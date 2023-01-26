@@ -9,7 +9,9 @@ class Provider:
 
     def get_topics(self) -> list[Topic]:
         logger.info("Getting topics")
-        data: dict = firestore_db.collection("topics").document("content").get().to_dict()
+        data: dict = (
+            firestore_db.collection("topics").document("content").get().to_dict()
+        )
         topics: list[Topic] = []
         for topic_id, topic in data:
             topic["id"] = topic_id
@@ -19,7 +21,9 @@ class Provider:
 
     def get_editors(self) -> list[Editor]:
         logger.info("Getting editors")
-        data: dict = firestore_db.collection("editors").document("content").get().to_dict()
+        data: dict = (
+            firestore_db.collection("editors").document("content").get().to_dict()
+        )
         editors = []
         for editor_id, editor in data:
             editor["id"] = editor_id
@@ -28,7 +32,9 @@ class Provider:
 
     def get_sources(self) -> list[Source]:
         logger.info("Getting sources")
-        data: dict = firestore_db.collection("sources").document("content").get().to_dict()
+        data: dict = (
+            firestore_db.collection("sources").document("content").get().to_dict()
+        )
         sources = []
         for editor_id, source in data:
             source["editor_id"] = editor_id
