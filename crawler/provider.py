@@ -12,7 +12,6 @@ from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
 from scrapy_crawler.spiders.vnexpress import VnExpressSpider
 from twisted.internet import reactor
 
-from logs import logger
 
 class Provider:
 

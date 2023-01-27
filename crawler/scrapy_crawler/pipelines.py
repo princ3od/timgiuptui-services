@@ -2,9 +2,8 @@ import json
 import timeit
 from datetime import datetime
 
-from slugify import slugify
-
 from logs import logger
+from slugify import slugify
 
 
 class NewsCrawlerPipeline:
