@@ -23,7 +23,7 @@ def init_crawler():
 
 @app.post("/crawler/start")
 def start_crawler():
-    body: list = normalize_pubsub_body(request.data)
+    body: list = normalize_pubsub_body(request.get_json())
     sources = [Source(**source) for source in body]
     provider.start_crawling(sources)
     return "OK", 200
