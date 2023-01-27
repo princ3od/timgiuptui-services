@@ -47,6 +47,5 @@ def get_sources():
     except Exception as e:
         logger.error(e)
     sources_json = [source.dict() for source in sources]
-    print(sources_json, flush=True)
     pubsub_publish(topic=PubSubTopicIds.START_CRAWLING, data=sources_json)
     return sources_json
