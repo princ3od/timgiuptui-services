@@ -13,7 +13,7 @@ class Provider:
             firestore_db.collection("topics").document("content").get().to_dict()
         )
         topics: list[Topic] = []
-        for topic_id, topic in data:
+        for topic_id, topic in data.items():
             topic["id"] = topic_id
             topics.append(Topic(**topic))
         topics = sorted(topics, key=lambda topic: topic.ordinal)
@@ -25,7 +25,7 @@ class Provider:
             firestore_db.collection("editors").document("content").get().to_dict()
         )
         editors = []
-        for editor_id, editor in data:
+        for editor_id, editor in data.items():
             editor["id"] = editor_id
             editors.append(Editor(**editor))
         return editors
@@ -36,7 +36,7 @@ class Provider:
             firestore_db.collection("sources").document("content").get().to_dict()
         )
         sources = []
-        for editor_id, source in data:
+        for editor_id, source in data.items():
             source["editor_id"] = editor_id
             sources.append(Source(**source))
         return sources

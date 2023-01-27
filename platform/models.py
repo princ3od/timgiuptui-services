@@ -20,9 +20,11 @@ class Source(BaseModel):
 
     @root_validator(pre=True)
     def generate_urls(cls, values: dict[str, str]):
+        non_topic_fields = ["editor_id", "urls"]
         values["urls"] = {}
         for field_name, field_value in values.items():
-            if field_name == "editor_id":
+            if field_name in non_topic_fields:
                 continue
+            print(field_name, field_value, flush=True)
             values["urls"][field_name] = field_value["url"]
         return values

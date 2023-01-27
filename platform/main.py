@@ -5,7 +5,7 @@ from logs import logger
 from models import Source
 from provider import Provider
 
-app = FastAPI(version="0.1.0", title="FastAPI", description="FastAPI example")
+app = FastAPI(version="0.1.0", title="[timgiuptui] Platform Service", description="Platform service documentation")
 
 provider = Provider()
 
@@ -43,5 +43,6 @@ def get_sources():
     except Exception as e:
         logger.error(e)
     sources_json = [source.dict() for source in sources]
+    print(sources_json, flush=True)
     pubsub_publish(topic=PubSubTopicIds.START_CRAWLING, data=sources_json)
     return sources_json
