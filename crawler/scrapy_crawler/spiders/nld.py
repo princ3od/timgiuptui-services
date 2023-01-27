@@ -1,10 +1,11 @@
 import re
-from bs4 import BeautifulSoup
-import scrapy
-from dateutil import parser as date_parser
 
-from scrapy_crawler.items import Article
+import scrapy
+from bs4 import BeautifulSoup
+from dateutil import parser as date_parser
 from models import Source
+from scrapy_crawler.items import Article
+
 
 class NguoiLaoDongSpider(scrapy.Spider):
     start_urls = []
@@ -23,8 +24,12 @@ class NguoiLaoDongSpider(scrapy.Spider):
     def parse_content(self, response):
         item = response.meta["item"]
         soup = BeautifulSoup(response.body, "html.parser")
-        item["description"] = soup.select_one(".sapo-detail").get_text(separator=" - ").strip()
-        item["description"] = re.sub(self.prefix_pattern, "", item["description"], 1, flags=re.IGNORECASE)
+        item["description"] = (
+            soup.select_one(".sapo-detail").get_text(separator=" - ").strip()
+        )
+        item["description"] = re.sub(
+            self.prefix_pattern, "", item["description"], 1, flags=re.IGNORECASE
+        )
         item["author"] = soup.select_one(".author.fr").get_text().strip()
         bodyElem = soup.select_one(".content-news-detail.old-news")
         item["content"] = ""

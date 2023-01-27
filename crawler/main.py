@@ -1,10 +1,10 @@
 import json
-from flask import Flask, Response, request
+
 from constants import PubSubTopicIds
+from event_handler import pubsub_publish
+from flask import Flask, request
 from models import Source
 from provider import Provider
-
-from event_handler import pubsub_publish
 
 app = Flask(__name__)
 

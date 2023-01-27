@@ -1,15 +1,14 @@
 import timeit
-from scrapy.crawler import CrawlerRunner, Settings
-from twisted.internet import reactor
-from scrapy.utils.project import get_project_settings
 
+from constants import PubSubTopicIds
+from event_handler import pubsub_publish
 from logs import logger
 from models import Source
-from event_handler import pubsub_publish
-from constants import PubSubTopicIds
+from scrapy.crawler import CrawlerRunner, Settings
+from scrapy_crawler import settings as local_crawler_settings
 from scrapy_crawler.pipelines import NewsCrawlerPipeline
 from scrapy_crawler.spiders.nld import NguoiLaoDongSpider
-from scrapy_crawler import settings as local_crawler_settings
+from twisted.internet import reactor
 
 
 class Provider:
@@ -31,7 +30,6 @@ class Provider:
 
         elapsed_time = round(timeit.default_timer() - self.start_time, 4)
         logger.info(f">> Elapsed time: {elapsed_time}")
-
 
     def _get_source_dict(self, sources: list[Source]) -> dict[str, Source]:
         source_dict = {}

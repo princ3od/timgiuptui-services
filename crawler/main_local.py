@@ -1,15 +1,13 @@
 import json
 import timeit
-from scrapy.crawler import CrawlerProcess, Settings
-
-from scrapy_crawler.pipelines import NewsCrawlerPipeline
-from scrapy_crawler import settings as local_crawler_settings
-
-from scrapy_crawler.spiders.nld import NguoiLaoDongSpider
-from scrapy_crawler.spiders.vnexpress import VnExpressSpider
-from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
 
 from models import Source
+from scrapy.crawler import CrawlerProcess, Settings
+from scrapy_crawler import settings as local_crawler_settings
+from scrapy_crawler.pipelines import NewsCrawlerPipeline
+from scrapy_crawler.spiders.nld import NguoiLaoDongSpider
+from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
+from scrapy_crawler.spiders.vnexpress import VnExpressSpider
 
 
 def main_local(*args, **kwargs):
@@ -22,7 +20,6 @@ def main_local(*args, **kwargs):
         TuoiTreSpider,
         VnExpressSpider,
         NguoiLaoDongSpider,
-        
     ]
     crawler_settings = Settings()
     crawler_settings.setmodule(local_crawler_settings)
@@ -50,7 +47,7 @@ def main_local(*args, **kwargs):
     for spider in spiders:
         crawler.crawl(spider, sources[spider.name])
 
-    d = crawler.join()
+    crawler.join()
     crawler.start()
 
     number_of_articles = 0

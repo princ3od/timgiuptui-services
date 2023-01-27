@@ -1,8 +1,8 @@
-from datetime import datetime
-import timeit
-from slugify import slugify
-
 import json
+import timeit
+from datetime import datetime
+
+from slugify import slugify
 
 
 class NewsCrawlerPipeline:
@@ -38,7 +38,6 @@ class NewsCrawlerPipeline:
         self.spider_articles = {}
         self.start_time = timeit.default_timer()
         print(f"> Start crawling {spider.name}...", flush=True)
-        pass
 
     def close_spider(self, spider):
         if self.save_spider_articles:

@@ -1,10 +1,10 @@
 import re
-from bs4 import BeautifulSoup
-import scrapy
-from dateutil import parser as date_parser
 
-from scrapy_crawler.items import Article
+import scrapy
+from bs4 import BeautifulSoup
+from dateutil import parser as date_parser
 from models import Source
+from scrapy_crawler.items import Article
 
 
 class TuoiTreSpider(scrapy.Spider):
@@ -28,7 +28,9 @@ class TuoiTreSpider(scrapy.Spider):
         description_elem = soup.select_one("#content .detail-sapo")
         if description_elem is not None:
             item["description"] = description_elem.get_text().strip()
-            item["description"] = re.sub(self.prefix_pattern, "", item["description"], 1, flags=re.IGNORECASE)
+            item["description"] = re.sub(
+                self.prefix_pattern, "", item["description"], 1, flags=re.IGNORECASE
+            )
         item["author"] = soup.select_one("#content .author-info").get_text().strip()
         body_elem = soup.select_one("#content #main-detail .detail-cmain")
         item["content"] = ""
@@ -54,7 +56,9 @@ class TuoiTreSpider(scrapy.Spider):
             item["date"] = date_parser.parse(rss_item.xpath("pubDate/text()").get())
             description_raw = rss_item.xpath("description/text()").get()
             selector = scrapy.Selector(text=description_raw)
-            item["thumbnail"] = selector.xpath("//img/@src").get().replace("/zoom/80_50", "")
+            item["thumbnail"] = (
+                selector.xpath("//img/@src").get().replace("/zoom/80_50", "")
+            )
             request = scrapy.Request(
                 response.urljoin(article_url),
                 callback=self.parse_content,

@@ -1,9 +1,10 @@
 from datetime import datetime
-from bs4 import BeautifulSoup
-import scrapy
 
-from scrapy_crawler.items import Article
+import scrapy
+from bs4 import BeautifulSoup
 from models import Source
+from scrapy_crawler.items import Article
+
 
 class VnExpressSpider(scrapy.Spider):
     name = "vnexpress"
@@ -44,7 +45,9 @@ class VnExpressSpider(scrapy.Spider):
                 continue
             description_raw = post.xpath("description/text()").get()
             selector = scrapy.Selector(text=description_raw)
-            date = datetime.strptime(post.xpath("pubDate/text()").get(), "%a, %d %b %Y %H:%M:%S %z")
+            date = datetime.strptime(
+                post.xpath("pubDate/text()").get(), "%a, %d %b %Y %H:%M:%S %z"
+            )
             item = Article()
             item["title"] = post.xpath("title/text()").get()
             item["url"] = article_url
@@ -53,13 +56,21 @@ class VnExpressSpider(scrapy.Spider):
             item["source"] = self.name
             item["date"] = date
             item["thumbnail"] = selector.xpath("//img/@src").get()
-            request = scrapy.Request(response.urljoin(article_url), callback=self.parse_content)
+            request = scrapy.Request(
+                response.urljoin(article_url), callback=self.parse_content
+            )
             request.meta["item"] = item
             yield request
-        pass
 
     def _is_content_text(self, tag):
-        return not tag.has_attr("style") and not tag.has_attr("align") and (tag.has_attr("class") and tag["class"][0] == "Normal")
+        return (
+            not tag.has_attr("style")
+            and not tag.has_attr("align")
+            and (tag.has_attr("class") and tag["class"][0] == "Normal")
+        )
 
     def _is_author_text(self, tag):
-        return (tag.has_attr("class") and tag["class"][0] == "author") or ((tag.has_attr("style") and "right" in tag["style"]) or (tag.has_attr("align") and "right" in tag["align"]))
+        return (tag.has_attr("class") and tag["class"][0] == "author") or (
+            (tag.has_attr("style") and "right" in tag["style"])
+            or (tag.has_attr("align") and "right" in tag["align"])
+        )
