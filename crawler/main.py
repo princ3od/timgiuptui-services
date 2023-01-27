@@ -1,4 +1,3 @@
-
 from constants import PubSubTopicIds
 from event_handler import normalize_pubsub_body, pubsub_publish
 from flask import Flask, request
