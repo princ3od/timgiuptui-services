@@ -1,30 +1,66 @@
-from typing import Optional
+import timeit
+from scrapy.crawler import CrawlerRunner, Settings
+from twisted.internet import reactor
+from scrapy.utils.project import get_project_settings
 
 from logs import logger
-from models import User
+from models import Source
+from event_handler import pubsub_publish
+from constants import PubSubTopicIds
+from scrapy_crawler.pipelines import NewsCrawlerPipeline
+from scrapy_crawler.spiders.nld import NguoiLaoDongSpider
+from scrapy_crawler import settings as local_crawler_settings
 
 
 class Provider:
-    def __init__(self):
-        self.data = {}
 
-    def get(self, id: int) -> Optional[User]:
-        logger.info(f"get {id}")
-        if id in self.data:
-            return self.data[id]
-        return None
+    spiders = [
+        NguoiLaoDongSpider,
+    ]
 
-    def create(self, model: User) -> User:
-        logger.info(f"create {model}")
-        self.data[model.id] = model
-        return model
+    def start_crawling(self, sources: list[Source]) -> None:
+        self.start_time = timeit.default_timer()
+        logger.info(">> Start crawling...")
 
-    def update(self, id: str, model: User) -> User:
-        logger.info(f"update {id} {model}")
-        self.data[id] = model
-        return model
+        source_dict = self._get_source_dict(sources)
+        crawler = self._setup_crawler()
+        self._setup_spiders(crawler, source_dict)
 
-    def delete(self, id: str) -> None:
-        logger.info(f"delete {id}")
-        if id in self.data:
-            del self.data[id]
+        self._crawl(crawler)
+        self._handle_crawled_articles(NewsCrawlerPipeline.articles_by_topics)
+
+        elapsed_time = round(timeit.default_timer() - self.start_time, 4)
+        logger.info(f">> Elapsed time: {elapsed_time}")
+
+
+    def _get_source_dict(self, sources: list[Source]) -> dict[str, Source]:
+        source_dict = {}
+        for source in sources:
+            if source.editor_id not in source_dict:
+                source_dict[source.editor_id] = []
+            source_dict[source.editor_id] = source
+        return source_dict
+
+    def _setup_crawler(self) -> CrawlerRunner:
+        crawler_settings = Settings()
+        crawler_settings.setmodule(local_crawler_settings)
+        crawler = CrawlerRunner(settings=crawler_settings)
+        return crawler
+
+    def _setup_spiders(self, crawler: CrawlerRunner, sources: dict[str, Source]):
+        for spider in self.spiders:
+            source = sources[spider.name]
+            crawler.crawl(spider, source)
+
+    def _crawl(self, crawler: CrawlerRunner):
+        d = crawler.join()
+        d.addBoth(lambda _: reactor.stop())
+        reactor.run(0)
+
+    def _handle_crawled_articles(self, articles: dict[str, dict]):
+        pubsub_publish(topic=PubSubTopicIds.HANDLE_ARTICLES, data=articles)
+        number_of_articles = 0
+        for topic, articles_by_topic in articles.items():
+            number_of_articles += len(articles_by_topic.keys())
+            print(f"> {topic}: {len(articles_by_topic.keys())}")
+        print(f">> Number of articles: {number_of_articles}")

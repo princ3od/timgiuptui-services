@@ -1,6 +1,10 @@
-from flask import Flask, Response
-from models import User
+import json
+from flask import Flask, Response, request
+from constants import PubSubTopicIds
+from models import Source
 from provider import Provider
+
+from event_handler import pubsub_publish
 
 app = Flask(__name__)
 
@@ -12,34 +16,15 @@ def health():
     return "OK", 200
 
 
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    user = provider.get(user_id)
-    if user is None:
-        return {"message": "User not found"}, 404
-    return user
+@app.post("/crawler/initialize")
+def init_crawler():
+    pubsub_publish(topic=PubSubTopicIds.GET_CRAWLING_SOURCES, data={})
+    return "OK", 200
 
 
-@app.post("/users")
-def create_user(user: User):
-    _user = provider.get(user.id)
-    if _user is not None:
-        return {"message": "User already exists"}, 409
-    return provider.create(user), 201
-
-
-@app.put("/users/{user_id}")
-def update_user(user_id: int, user: User):
-    _user = provider.get(user_id)
-    if _user is None:
-        return {"message": "User not found"}, 404
-    return provider.update(user_id, user), 200
-
-
-@app.delete("/users/{user_id}")
-def delete_user(user_id: int):
-    user = provider.get(user_id)
-    if user is None:
-        return {"message": "User not found"}, 404
-    provider.delete(user_id)
-    return Response(status=204)
+@app.post("/crawler/start")
+def start_crawler():
+    body: dict = json.loads(request.data)
+    sources = [Source(**source) for source in body]
+    provider.start_crawling(sources)
+    return "OK", 200

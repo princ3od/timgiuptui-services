@@ -4,4 +4,5 @@ PROJECT_ID = "timgiuptui"
 
 
 class PubSubTopicIds(Enum):
-    pass
+    GET_CRAWLING_SOURCES = "get-crawling-sources"
+    HANDLE_ARTICLES = "handle-articles"

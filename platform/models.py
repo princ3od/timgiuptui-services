@@ -24,5 +24,5 @@ class Source(BaseModel):
         for field_name, field_value in values.items():
             if field_name == "editor_id":
                 continue
-            values["url"][field_name] = field_value["url"]
+            values["urls"][field_name] = field_value["url"]
         return values

@@ -35,7 +35,7 @@ def get_editors():
         return []
 
 
-@app.get("/crawler/sources", status_code=status.HTTP_200_OK)
+@app.post("/crawler/sources", status_code=status.HTTP_200_OK)
 def get_sources():
     sources: list[Source] = []
     try:

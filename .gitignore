@@ -3,3 +3,5 @@ app.log
 __pycache__/
 crec.json
 gcp.json
+
+*.json
