@@ -1,7 +1,6 @@
-import json
 
 from constants import PubSubTopicIds
-from event_handler import pubsub_publish, normalize_pubsub_body
+from event_handler import normalize_pubsub_body, pubsub_publish
 from flask import Flask, request
 from models import Source
 from provider import Provider
