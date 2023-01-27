@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from dateutil import parser as date_parser
 from models import Source
 from scrapy_crawler.items import Article
-
+from logs import logger
 
 class TuoiTreSpider(scrapy.Spider):
     name = "tuoitre"
@@ -37,7 +37,7 @@ class TuoiTreSpider(scrapy.Spider):
         if body_elem is not None:
             tags = body_elem.find_all("p", recursive=True)
             if len(tags) == 0:
-                print(f"Warning: {item['url']} has no content [no p tag]")
+                logger.warning(f"Warning: {item['url']} has no content [no p tag]")
             for tag in tags:
                 item["content"] += tag.get_text(" ") + " \n"
         return item

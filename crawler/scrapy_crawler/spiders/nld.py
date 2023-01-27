@@ -18,8 +18,6 @@ class NguoiLaoDongSpider(scrapy.Spider):
         self.allowed_domains = ["nld.com.vn"]
         self.urls_topics = source.get_urls_topics()
         self.start_urls = source.get_all_urls()
-        print(self.start_urls)
-        print(self.urls_topics)
 
     def parse_content(self, response):
         item = response.meta["item"]

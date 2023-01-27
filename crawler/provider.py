@@ -12,6 +12,7 @@ from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
 from scrapy_crawler.spiders.vnexpress import VnExpressSpider
 from twisted.internet import reactor
 
+from logs import logger
 
 class Provider:
 
@@ -66,5 +67,4 @@ class Provider:
         number_of_articles = 0
         for topic, articles_by_topic in articles.items():
             number_of_articles += len(articles_by_topic.keys())
-            print(f"> {topic}: {len(articles_by_topic.keys())}")
-        print(f">> Number of articles: {number_of_articles}")
+        logger.info(f">> Number of articles: {number_of_articles}")

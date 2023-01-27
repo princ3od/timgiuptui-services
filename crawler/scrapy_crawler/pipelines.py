@@ -4,6 +4,8 @@ from datetime import datetime
 
 from slugify import slugify
 
+from logs import logger
+
 
 class NewsCrawlerPipeline:
     articles_by_topics: dict[str, dict] = {}
@@ -31,13 +33,12 @@ class NewsCrawlerPipeline:
             "accessed_date": datetime.utcnow(),
         }
         self._store_article(_item)
-        print(f"> {item['topic']}: {item['title']}", flush=True)
         return item
 
     def open_spider(self, spider):
         self.spider_articles = {}
         self.start_time = timeit.default_timer()
-        print(f"> Start crawling {spider.name}...", flush=True)
+        logger.info(f"> Start crawling {spider.name}...")
 
     def close_spider(self, spider):
         if self.save_spider_articles:
@@ -50,11 +51,11 @@ class NewsCrawlerPipeline:
                     default=str,
                 )
         elapsed_time = round(timeit.default_timer() - self.start_time, 4)
-        print(f">> Time elapsed for {spider.name}: {elapsed_time}s", flush=True)
+        logger.info(f">> Time elapsed for {spider.name}: {elapsed_time}s")
 
     def _store_article(self, item):
         topic = item["topic"]
-        print(f"> {topic}: {item['title']}", flush=True)
+        logger.info(f"> {topic}: {item['title']}")
         if topic not in self.articles_by_topics:
             self.articles_by_topics[topic] = {}
         if topic not in self.spider_articles:

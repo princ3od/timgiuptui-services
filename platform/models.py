@@ -25,6 +25,5 @@ class Source(BaseModel):
         for field_name, field_value in values.items():
             if field_name in non_topic_fields:
                 continue
-            print(field_name, field_value, flush=True)
             values["urls"][field_name] = field_value["url"]
         return values

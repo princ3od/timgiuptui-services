@@ -13,7 +13,11 @@ except Exception as e:
 
 def pubsub_publish(topic: PubSubTopicIds, data: dict):
     topic_path = publisher.topic_path(PROJECT_ID, topic.value)
-    str_data = json.dumps(data).encode("utf-8")
+    str_data = json.dumps(
+        data,
+        ensure_ascii=False,
+        default=str,
+    ).encode("utf-8")
     logger.info(f"Publishing to {topic_path} with data {str_data}")
     publisher.publish(topic_path, data=str_data)
 
