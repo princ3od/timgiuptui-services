@@ -22,7 +22,10 @@ def init_crawler():
 
 @app.post("/crawler/start")
 def start_crawler():
-    body: list = normalize_pubsub_body(request.get_json())
+    envelop = request.get_json()
+    if envelop is None or envelop.get("message") is None:
+        return "No body", 400
+    body: list = normalize_pubsub_body(envelop["message"])
     sources = [Source(**source) for source in body]
     provider.start_crawling(sources)
     return "OK", 200

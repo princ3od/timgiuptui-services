@@ -1,4 +1,5 @@
 import timeit
+from twisted.internet import reactor
 
 from constants import PubSubTopicIds
 from event_handler import pubsub_publish
@@ -8,13 +9,17 @@ from scrapy.crawler import CrawlerRunner, Settings
 from scrapy_crawler import settings as local_crawler_settings
 from scrapy_crawler.pipelines import NewsCrawlerPipeline
 from scrapy_crawler.spiders.nld import NguoiLaoDongSpider
-from twisted.internet import reactor
+from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
+from scrapy_crawler.spiders.vnexpress import VnExpressSpider
+
 
 
 class Provider:
 
     spiders = [
         NguoiLaoDongSpider,
+        TuoiTreSpider,
+        VnExpressSpider,
     ]
 
     def start_crawling(self, sources: list[Source]) -> None:
@@ -47,6 +52,8 @@ class Provider:
 
     def _setup_spiders(self, crawler: CrawlerRunner, sources: dict[str, Source]):
         for spider in self.spiders:
+            if spider.name not in sources:
+                continue
             source = sources[spider.name]
             crawler.crawl(spider, source)
 

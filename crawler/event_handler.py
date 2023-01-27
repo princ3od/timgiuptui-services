@@ -19,6 +19,8 @@ def pubsub_publish(topic: PubSubTopicIds, data: dict):
 
 
 def normalize_pubsub_body(body: dict):
+    logger.info(f"Received body: {body}")
     data = body.get("data")
+    logger.info(f"Received data: {data}")
     decoded_body = base64.b64decode(data).decode("utf-8")
     return json.loads(decoded_body)
