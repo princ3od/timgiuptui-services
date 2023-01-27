@@ -1,5 +1,4 @@
 import timeit
-from twisted.internet import reactor
 
 from constants import PubSubTopicIds
 from event_handler import pubsub_publish
@@ -11,7 +10,7 @@ from scrapy_crawler.pipelines import NewsCrawlerPipeline
 from scrapy_crawler.spiders.nld import NguoiLaoDongSpider
 from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
 from scrapy_crawler.spiders.vnexpress import VnExpressSpider
-
+from twisted.internet import reactor
 
 
 class Provider:
