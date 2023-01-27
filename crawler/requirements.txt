@@ -6,3 +6,4 @@ beautifulsoup4==4.10.0
 protego==0.1.16
 python-slugify==6.1.0
 python-dateutil==2.8.2
+google-cloud-pubsub==2.14.0
