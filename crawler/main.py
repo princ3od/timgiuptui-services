@@ -1,7 +1,7 @@
 import json
 
 from constants import PubSubTopicIds
-from event_handler import pubsub_publish
+from event_handler import pubsub_publish, normalize_pubsub_body
 from flask import Flask, request
 from models import Source
 from provider import Provider
@@ -24,8 +24,7 @@ def init_crawler():
 
 @app.post("/crawler/start")
 def start_crawler():
-    data = request.data.decode("utf-8")
-    body: list = json.loads(data)
+    body: list = normalize_pubsub_body(request.data)
     sources = [Source(**source) for source in body]
     provider.start_crawling(sources)
     return "OK", 200
