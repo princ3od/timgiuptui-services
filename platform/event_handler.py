@@ -2,7 +2,6 @@ import json
 
 from constants import PROJECT_ID, PubSubTopicIds
 from google.cloud.pubsub_v1 import PublisherClient
-
 from logs import logger
 
 try:

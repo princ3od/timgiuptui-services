@@ -5,7 +5,11 @@ from logs import logger
 from models import Source
 from provider import Provider
 
-app = FastAPI(version="0.1.0", title="[timgiuptui] Platform Service", description="Platform service documentation")
+app = FastAPI(
+    version="0.1.0",
+    title="[timgiuptui] Platform Service",
+    description="Platform service documentation",
+)
 
 provider = Provider()
 
