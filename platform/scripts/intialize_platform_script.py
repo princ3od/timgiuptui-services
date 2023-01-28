@@ -1,10 +1,5 @@
-import base64
-import json
-import os
-
 from firebase_admin import credentials, firestore, initialize_app
 from google.cloud.firestore import Client
-
 
 firebase_credentials = credentials.Certificate("platform/crec.json")
 initialize_app(firebase_credentials)
