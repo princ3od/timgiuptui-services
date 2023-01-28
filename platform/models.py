@@ -5,6 +5,7 @@ class Topic(BaseModel):
     id: str
     ordinal: int
     name: str
+    url: str
 
 
 class Editor(BaseModel):
