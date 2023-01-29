@@ -3,8 +3,15 @@ services:
   handler:
     build: .
     environment:
-      - PORT=8080
+      PORT: 8080
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     ports:
       - "8080:8080"
     volumes:
       - .:/app
+
+  redis:
+    image: redislabs/rejson:latest
+    ports:
+      - "6379:6379"

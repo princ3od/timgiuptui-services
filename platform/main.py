@@ -1,6 +1,6 @@
 from constants import PubSubTopicIds
 from event_handler import pubsub_publish
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, HTTPException
 from logs import logger
 from models import Source
 from provider import Provider
@@ -46,6 +46,10 @@ def get_sources():
         sources = provider.get_sources()
     except Exception as e:
         logger.error(e)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Cannot get sources",
+        )
     sources_json = [source.dict() for source in sources]
     pubsub_publish(topic=PubSubTopicIds.START_CRAWLING, data=sources_json)
     return sources_json

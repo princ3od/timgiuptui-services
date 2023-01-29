@@ -29,7 +29,7 @@ class NewsCrawlerPipeline:
             "author": item["author"],
             "date": item["date"],
             "thumbnail": item["thumbnail"],
-            "accessed_date": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S %z"),
+            "accessed_date": datetime.utcnow().astimezone().isoformat(),
         }
         self._store_article(_item)
         return item

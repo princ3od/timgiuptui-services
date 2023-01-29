@@ -17,6 +17,7 @@ def pubsub_publish(topic: PubSubTopicIds, data: dict):
         data,
         ensure_ascii=False,
         default=str,
+        separators=(",", ":"),
     ).encode("utf-8")
     logger.info(f"Publishing to {topic_path} with data {str_data}")
     publisher.publish(topic_path, data=str_data)

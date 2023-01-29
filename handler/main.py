@@ -1,6 +1,6 @@
-from flask import Flask, Response
-from models import User
+from flask import Flask, Response, request
 from provider import Provider
+from event_handler import normalize_pubsub_body
 
 app = Flask(__name__)
 
@@ -12,34 +12,11 @@ def health():
     return "OK", 200
 
 
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    user = provider.get(user_id)
-    if user is None:
-        return {"message": "User not found"}, 404
-    return user
-
-
-@app.post("/users")
-def create_user(user: User):
-    _user = provider.get(user.id)
-    if _user is not None:
-        return {"message": "User already exists"}, 409
-    return provider.create(user), 201
-
-
-@app.put("/users/{user_id}")
-def update_user(user_id: int, user: User):
-    _user = provider.get(user_id)
-    if _user is None:
-        return {"message": "User not found"}, 404
-    return provider.update(user_id, user), 200
-
-
-@app.delete("/users/{user_id}")
-def delete_user(user_id: int):
-    user = provider.get(user_id)
-    if user is None:
-        return {"message": "User not found"}, 404
-    provider.delete(user_id)
-    return Response(status=204)
+@app.post("/crawler/handle")
+def handler_crawled_data():
+    envelop = request.get_json()
+    if envelop is None or envelop.get("message") is None:
+        return "No body", 400
+    data = normalize_pubsub_body(envelop["message"])
+    provider.handle_crawled_data(data)
+    return "OK", 200
