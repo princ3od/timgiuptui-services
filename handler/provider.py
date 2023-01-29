@@ -1,9 +1,9 @@
 from typing import Optional
 
-from models import ArticlesFromCrawler
-from logs import logger
 from articles_matcher import match_articles
 from articles_uploader import upload_articles
+from logs import logger
+from models import ArticlesFromCrawler
 
 
 class Provider:

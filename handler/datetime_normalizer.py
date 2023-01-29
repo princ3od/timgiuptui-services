@@ -1,5 +1,6 @@
-import readtime
 from datetime import datetime
+
+import readtime
 from models import Article
 
 

@@ -1,6 +1,6 @@
 from constants import PubSubTopicIds
 from event_handler import pubsub_publish
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from logs import logger
 from models import Source
 from provider import Provider

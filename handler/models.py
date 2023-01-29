@@ -1,6 +1,7 @@
 import datetime
-from pydantic import BaseModel, root_validator
 from typing import Optional, Union
+
+from pydantic import BaseModel, root_validator
 
 
 class Article(BaseModel):
@@ -21,11 +22,9 @@ class Article(BaseModel):
 
     def get_full_text(self):
         return f"{self.title}. {self.description} {self.content}"
-    
+
     class Config:
-        json_encoders = {
-            datetime.datetime: lambda v: v.isoformat()
-        }
+        json_encoders = {datetime.datetime: lambda v: v.isoformat()}
 
 
 class ArticlesFromCrawler(BaseModel):

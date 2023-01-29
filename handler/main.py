@@ -1,6 +1,6 @@
-from flask import Flask, Response, request
-from provider import Provider
 from event_handler import normalize_pubsub_body
+from flask import Flask, request
+from provider import Provider
 
 app = Flask(__name__)
 

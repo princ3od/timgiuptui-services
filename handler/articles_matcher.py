@@ -1,11 +1,9 @@
-from underthesea import word_tokenize
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
-
-from stopwords import stopwords
-from models import ArticlesFromCrawler, Article
 from constants import SIMILARITY_THRESHOLD
-
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from logs import logger
+from models import Article, ArticlesFromCrawler
+from stopwords import stopwords
+from underthesea import word_tokenize
 
 
 def match_articles(data: ArticlesFromCrawler):

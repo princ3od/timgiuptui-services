@@ -1,11 +1,11 @@
 import json
-from redis.commands.json.path import Path
 
-from database import firestore_db, redis_client
-from models import ArticlesFromCrawler, Article
-from logs import logger
-from datetime_normalizer import normalize_article_datetime
 from constants import REDIS_EXPRIRED_TIME_IN_SECONDS
+from database import firestore_db, redis_client
+from datetime_normalizer import normalize_article_datetime
+from logs import logger
+from models import Article, ArticlesFromCrawler
+from redis.commands.json.path import Path
 
 
 def upload_articles(data: ArticlesFromCrawler):
@@ -51,9 +51,13 @@ def _upload_redis(article: Article):
             }
         )
     )
-    result = redis_client.json().set(f"articles:{article.id}", Path.rootPath(), article_dict)
+    result = redis_client.json().set(
+        f"articles:{article.id}", Path.rootPath(), article_dict
+    )
     if not result:
         logger.error(f"Failed to upload article {article.id} to Redis.")
         return result
-    result = redis_client.expire(f"articles:{article.id}", REDIS_EXPRIRED_TIME_IN_SECONDS)
+    result = redis_client.expire(
+        f"articles:{article.id}", REDIS_EXPRIRED_TIME_IN_SECONDS
+    )
     return True
