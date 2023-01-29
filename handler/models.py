@@ -1,8 +1,9 @@
 import datetime
 from typing import Optional, Union
 
-from pydantic import BaseModel, root_validator
 from logs import logger
+from pydantic import BaseModel, root_validator
+
 
 class Article(BaseModel):
     id: str
