@@ -2,7 +2,7 @@ import datetime
 from typing import Optional, Union
 
 from pydantic import BaseModel, root_validator
-
+from logs import logger
 
 class Article(BaseModel):
     id: str
@@ -37,5 +37,10 @@ class ArticlesFromCrawler(BaseModel):
         for topic_id, articles in values.items():
             if topic_id in non_topic_fields:
                 continue
-            values["articles"][topic_id] = [Article(**article) for article in articles.values()]
+            values["articles"][topic_id] = []
+            for article in articles.values():
+                try:
+                    values["articles"][topic_id].append(Article(**article))
+                except Exception as e:
+                    logger.error(f"Failed to parse article: {e}")
         return values
