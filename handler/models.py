@@ -37,5 +37,5 @@ class ArticlesFromCrawler(BaseModel):
         for topic_id, articles in values.items():
             if topic_id in non_topic_fields:
                 continue
-            values["articles"][topic_id] = [Article(**article) for article in articles]
+            values["articles"][topic_id] = [Article(**article) for article in articles.values()]
         return values
