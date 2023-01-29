@@ -41,11 +41,9 @@ def _upload_redis(article: Article):
             include={
                 "id",
                 "title",
-                "url",
                 "topic",
                 "source",
                 "description",
-                "author",
                 "thumbnail",
                 "date",
             }

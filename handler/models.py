@@ -18,7 +18,7 @@ class Article(BaseModel):
     date: Union[str, datetime.datetime]
     accessed_date: Union[str, datetime.datetime]
     thumbnail: str
-    similar_articles: Optional[dict[str, dict[str, dict]]]
+    similar_articles: Optional[dict[str, dict[str, dict]]] = {}
     read_time_minutes: Optional[int]
 
     def get_full_text(self):

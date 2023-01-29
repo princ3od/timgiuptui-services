@@ -28,8 +28,8 @@ def _create_matching_model(topic_id: str, articles: list[Article]):
     for article in articles:
         tokenized_articles[article.id] = _tokenize_article(article)
     tagged_data = [
-        TaggedDocument(words=tokenized_article, tags=[article_id])
-        for article_id, tokenized_article in tokenized_articles.items()
+        TaggedDocument(words=tokenized_article, tags=[index])
+        for index, tokenized_article in enumerate(tokenized_articles.values())
     ]
     model = Doc2Vec(tagged_data, vector_size=20, window=2, min_count=1, workers=4)
     logger.info(f"Created matching model for topic {topic_id}.")
