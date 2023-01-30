@@ -1,9 +1,9 @@
 import json
 
+from common.logs import logger
 from constants import REDIS_EXPRIRED_TIME_IN_SECONDS
 from database import firestore_db, redis_client
 from datetime_normalizer import normalize_article_datetime
-from common.logs import logger
 from models import Article, ArticlesFromCrawler
 from redis.commands.json.path import Path
 

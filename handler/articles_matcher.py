@@ -1,6 +1,6 @@
+from common.logs import logger
 from constants import SIMILARITY_THRESHOLD
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
-from common.logs import logger
 from models import Article, ArticlesFromCrawler
 from stopwords import stopwords
 from underthesea import word_tokenize

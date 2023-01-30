@@ -1,5 +1,5 @@
-from database import firestore_db
 from common.logs import logger
+from database import firestore_db
 from models import Editor, Source, Topic
 
 
