@@ -2,8 +2,8 @@ import base64
 import json
 
 from common.constants import PROJECT_ID, PubSubTopic
-from google.cloud.pubsub_v1 import PublisherClient
 from common.logs import logger
+from google.cloud.pubsub_v1 import PublisherClient
 
 
 def pubsub_publish(topic: PubSubTopic, data: dict):
