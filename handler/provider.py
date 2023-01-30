@@ -2,7 +2,7 @@ from typing import Optional
 
 from articles_matcher import match_articles
 from articles_uploader import upload_articles
-from logs import logger
+from common.logs import logger
 from models import ArticlesFromCrawler
 
 

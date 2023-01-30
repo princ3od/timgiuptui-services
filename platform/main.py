@@ -1,7 +1,7 @@
-from constants import PubSubTopicIds
-from event_handler import pubsub_publish
+from common.constants import PubSubTopic
+from common.event_handler import pubsub_publish
 from fastapi import FastAPI, HTTPException, status
-from logs import logger
+from common.logs import logger
 from models import Source
 from provider import Provider
 
@@ -51,5 +51,5 @@ def get_sources():
             detail="Cannot get sources",
         )
     sources_json = [source.dict() for source in sources]
-    pubsub_publish(topic=PubSubTopicIds.START_CRAWLING, data=sources_json)
+    pubsub_publish(topic=PubSubTopic.START_CRAWLING, data=sources_json)
     return sources_json

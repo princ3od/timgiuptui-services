@@ -1,6 +1,6 @@
 from typing import Optional
 
-from logs import logger
+from common.logs import logger
 from models import User
 
 

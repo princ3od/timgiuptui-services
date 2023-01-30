@@ -1,8 +1,8 @@
 import timeit
 
-from constants import PubSubTopicIds
-from event_handler import pubsub_publish
-from logs import logger
+from common.constants import PubSubTopic
+from common.event_handler import pubsub_publish
+from common.logs import logger
 from models import Source
 from scrapy.crawler import CrawlerRunner, Settings
 from scrapy_crawler import settings as local_crawler_settings
@@ -62,7 +62,7 @@ class Provider:
         reactor.run(0)
 
     def _handle_crawled_articles(self, articles: dict[str, dict]):
-        pubsub_publish(topic=PubSubTopicIds.HANDLE_ARTICLES, data=articles)
+        pubsub_publish(topic=PubSubTopic.HANDLE_ARTICLES, data=articles)
         number_of_articles = 0
         for topic, articles_by_topic in articles.items():
             number_of_articles += len(articles_by_topic.keys())

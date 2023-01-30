@@ -2,7 +2,7 @@ import json
 import timeit
 from datetime import datetime
 
-from logs import logger
+from common.logs import logger
 from slugify import slugify
 
 

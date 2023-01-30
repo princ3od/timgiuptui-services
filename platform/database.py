@@ -2,7 +2,7 @@ import base64
 import json
 import os
 
-from constants import LOCAL_FIRESTORE_CREDENTIAL_PATH
+from common.constants import LOCAL_FIRESTORE_CREDENTIAL_PATH
 from firebase_admin import credentials, firestore, initialize_app
 from google.cloud.firestore import Client
 

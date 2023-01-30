@@ -57,7 +57,7 @@ def main_local(*args, **kwargs):
     elapsed_time = round(timeit.default_timer() - start_time, 4)
     print(f">> Number of articles: {number_of_articles}")
     print(f">> Time elapsed: {elapsed_time}s")
-    with open(f"articles_by_topics.json", "w", encoding="utf-8") as file:
+    with open("articles_by_topics.json", "w", encoding="utf-8") as file:
         json.dump(
             NewsCrawlerPipeline.articles_by_topics,
             file,

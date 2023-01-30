@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional, Union
 
-from logs import logger
+from common.logs import logger
 from pydantic import BaseModel, root_validator
 
 

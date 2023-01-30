@@ -3,7 +3,7 @@ import re
 import scrapy
 from bs4 import BeautifulSoup
 from dateutil import parser as date_parser
-from logs import logger
+from common.logs import logger
 from models import Source
 from scrapy_crawler.items import Article
 

@@ -1,4 +1,4 @@
-from event_handler import normalize_pubsub_body
+from common.event_handler import normalize_pubsub_body
 from flask import Flask, request
 from provider import Provider
 

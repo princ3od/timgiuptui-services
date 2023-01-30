@@ -1,5 +1,5 @@
-from constants import PubSubTopicIds
-from event_handler import normalize_pubsub_body, pubsub_publish
+from common.constants import PubSubTopic
+from common.event_handler import normalize_pubsub_body, pubsub_publish
 from flask import Flask, request
 from models import Source
 from provider import Provider
@@ -16,7 +16,7 @@ def health():
 
 @app.post("/crawler/initialize")
 def init_crawler():
-    pubsub_publish(topic=PubSubTopicIds.GET_CRAWLING_SOURCES, data={})
+    pubsub_publish(topic=PubSubTopic.GET_CRAWLING_SOURCES, data={})
     return "OK", 200
 
 
