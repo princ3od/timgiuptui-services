@@ -1,7 +1,6 @@
 from common.logs import logger
-from models import SearchQuery
+from models import Article, SearchQuery
 from redis_search import search_articles
-from models import Article
 
 
 class Provider:

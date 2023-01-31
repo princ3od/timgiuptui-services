@@ -1,7 +1,8 @@
 import re
-from typing import Optional
-from pydantic import BaseModel, root_validator
 from enum import Enum
+from typing import Optional
+
+from pydantic import BaseModel, root_validator
 
 _special_chars_re = r"(\'|\"|\.|\,|\;|\<|\>|\{|\}|\[|\]|\"|\'|\=|\~|\*|\:|\#|\+|\^|\$|\@|\%|\!|\&|\)|\(|/|\-|\\)"
 

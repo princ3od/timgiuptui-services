@@ -1,8 +1,8 @@
 import os
+
+from models import Article, Order, SearchQuery, SortBy
 from redis import Redis
 from redis.commands.search.query import Query
-
-from models import Article, SearchQuery, SortBy, Order
 
 redis_client = Redis(
     host=os.environ["REDIS_HOST"],

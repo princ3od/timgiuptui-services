@@ -1,6 +1,6 @@
-from fastapi import FastAPI, status, Request, HTTPException
-from provider import Provider
+from fastapi import FastAPI, HTTPException, Request, status
 from models import SearchQuery
+from provider import Provider
 
 app = FastAPI(
     version="0.1.0",

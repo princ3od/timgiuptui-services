@@ -1,10 +1,9 @@
-from init_redis_index import redis_client
-
 import datetime
 import json
-from redis.commands.json.path import Path
 
-from redis.commands.search.field import TextField, NumericField
+from init_redis_index import redis_client
+from redis.commands.json.path import Path
+from redis.commands.search.field import NumericField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 
