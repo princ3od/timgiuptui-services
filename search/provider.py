@@ -1,30 +1,12 @@
-from typing import Optional
-
 from common.logs import logger
-from models import User
+from models import SearchQuery
+from redis_search import search_articles
+from models import Article
 
 
 class Provider:
-    def __init__(self):
-        self.data = {}
-
-    def get(self, id: int) -> Optional[User]:
-        logger.info(f"get {id}")
-        if id in self.data:
-            return self.data[id]
-        return None
-
-    def create(self, model: User) -> User:
-        logger.info(f"create {model}")
-        self.data[model.id] = model
-        return model
-
-    def update(self, id: str, model: User) -> User:
-        logger.info(f"update {id} {model}")
-        self.data[id] = model
-        return model
-
-    def delete(self, id: str) -> None:
-        logger.info(f"delete {id}")
-        if id in self.data:
-            del self.data[id]
+    def search(searh_query: SearchQuery) -> list[Article]:
+        logger.info(f"Searching articles with query {searh_query}")
+        articles = search_articles(searh_query)
+        logger.info(f"Found {len(articles)} articles.")
+        return articles

@@ -12,6 +12,6 @@ services:
       - .:/app
 
   redis:
-    image: redislabs/rejson:latest
+    image: redis/redis-stack:latest
     ports:
       - "6379:6379"

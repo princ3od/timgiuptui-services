@@ -5,3 +5,4 @@ crec.json
 gcp.json
 
 *.json
+.env

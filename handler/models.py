@@ -25,7 +25,7 @@ class Article(BaseModel):
         return f"{self.title}. {self.description} {self.content}"
 
     class Config:
-        json_encoders = {datetime.datetime: lambda v: v.isoformat()}
+        json_encoders = {datetime.datetime: lambda v: v.timestamp()}
 
 
 class ArticlesFromCrawler(BaseModel):

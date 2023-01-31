@@ -26,7 +26,9 @@ def _upload(articles: list[Article]):
 
 def _upload_firestore(article: Article):
     """Uploads article to Firestore."""
-    firestore_db.collection("articles").document(article.id).set(article.dict(), merge=True)
+    firestore_db.collection("articles").document(article.id).set(
+        article.dict(), merge=True
+    )
     return True
 
 
@@ -42,6 +44,7 @@ def _upload_redis(article: Article):
                 "description",
                 "thumbnail",
                 "date",
+                "url",
             }
         )
     )
