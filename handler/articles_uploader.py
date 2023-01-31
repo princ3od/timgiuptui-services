@@ -26,11 +26,7 @@ def _upload(articles: list[Article]):
 
 def _upload_firestore(article: Article):
     """Uploads article to Firestore."""
-    current_article_ref = firestore_db.collection("articles").document(article.id).get()
-    if current_article_ref.exists:
-        logger.info(f"Article {article.id} already exists in Firestore.")
-        return
-    firestore_db.collection("articles").document(article.id).set(article.dict())
+    firestore_db.collection("articles").document(article.id).set(article.dict(), merge=True)
     return True
 
 
