@@ -64,11 +64,11 @@ class SearchQuery(BaseModel):
             raise ValueError("Limit must be between 1 and 20")
         if "offset" in values and int(values["offset"]) < 0:
             raise ValueError("Offset must be greater than 0")
-        if "sources" in values:
+        if "sources" in values and values["sources"] is not None:
             values["sources"] = [
                 _remove_special_chars(source) for source in values["sources"].split(",")
             ]
-        if "topics" in values:
+        if "topics" in values and values["topics"] is not None:
             values["topics"] = [
                 _remove_special_chars(topic) for topic in values["topics"].split(",")
             ]
