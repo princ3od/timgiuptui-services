@@ -16,7 +16,7 @@ def health():
 
 
 @app.get("/articles/search", status_code=status.HTTP_200_OK)
-def get_user(request: Request):
+def fulltext_search_articles(request: Request):
     params = request.query_params
     try:
         query = SearchQuery(**params)
@@ -27,7 +27,7 @@ def get_user(request: Request):
 
 
 @app.get("/articles/autocomplete", status_code=status.HTTP_200_OK)
-def get_user(request: Request):
+def get_autocomplete_suggestions(request: Request):
     params = request.query_params
     try:
         query = SearchQuery(**params)
