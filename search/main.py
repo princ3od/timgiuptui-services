@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException, Request, status
-from models import SearchQuery, SortBy, Order
+from fastapi import FastAPI, HTTPException, status
+from models import Order, SearchQuery, SortBy
 from provider import Provider
 
 app = FastAPI(
