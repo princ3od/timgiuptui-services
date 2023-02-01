@@ -5,10 +5,10 @@ import os
 from dotenv import load_dotenv
 from redis import Redis
 from redis.commands.json.path import Path
-from redis.commands.search.suggestion import Suggestion
 from redis.commands.search.field import NumericField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
+from redis.commands.search.suggestion import Suggestion
 
 load_dotenv("search/scripts/.env.local")
 
@@ -46,7 +46,9 @@ try:
         NumericField("$.date", as_name="date"),
     )
 
-    redis_client.ft("books").create_index(schema, definition=IndexDefinition(prefix=["books:"], index_type=IndexType.JSON))
+    redis_client.ft("books").create_index(
+        schema, definition=IndexDefinition(prefix=["books:"], index_type=IndexType.JSON)
+    )
 except Exception as e:
     print(e)
 

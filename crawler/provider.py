@@ -14,7 +14,6 @@ from twisted.internet import reactor
 
 
 class Provider:
-
     spiders = [
         NguoiLaoDongSpider,
         TuoiTreSpider,

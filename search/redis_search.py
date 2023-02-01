@@ -1,12 +1,10 @@
 import json
 import os
 
-from redis import Redis, ConnectionPool
-from redis.commands.search.query import Query
-
-from models import Article, Order, SearchQuery, SortBy
 from common.logs import logger
-
+from models import Article, Order, SearchQuery, SortBy
+from redis import ConnectionPool, Redis
+from redis.commands.search.query import Query
 
 connection_pool = ConnectionPool(
     host=os.environ["REDIS_HOST"],
@@ -14,8 +12,7 @@ connection_pool = ConnectionPool(
     password=os.environ.get("REDIS_PASSWORD"),
 )
 
-redis_client = Redis(connection_pool=connection_pool,socket_timeout=30)
-
+redis_client = Redis(connection_pool=connection_pool, socket_timeout=30)
 
 
 def search_articles(search_query: SearchQuery) -> list[Article]:
@@ -43,5 +40,5 @@ def _search(query: Query) -> list[Article]:
     for doc in docs:
         article = Article(**json.loads(doc.json))
         articles.append(article)
-        logger.info(f"Found article \"{article.title}\" with score {doc.score}")
+        logger.info(f'Found article "{article.title}" with score {doc.score}')
     return articles
