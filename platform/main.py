@@ -9,6 +9,7 @@ app = FastAPI(
     version="0.1.0",
     title="[timgiuptui] Platform Service",
     description="Platform service documentation",
+    swagger_ui_parameters={"displayRequestDuration": True},
 )
 
 provider = Provider()

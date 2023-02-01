@@ -6,6 +6,7 @@ app = FastAPI(
     version="0.1.0",
     title="[timgiuptui] Search Service",
     description="Search service documentation",
+    swagger_ui_parameters={"displayRequestDuration": True},
 )
 provider = Provider()
 
