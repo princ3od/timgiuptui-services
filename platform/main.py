@@ -2,7 +2,7 @@ from common.constants import PubSubTopic
 from common.event_handler import pubsub_publish
 from common.logs import logger
 from fastapi import FastAPI, HTTPException, status
-from models import Source, Topic, Editor
+from models import Editor, Source, Topic
 from provider import Provider
 
 app = FastAPI(

@@ -55,7 +55,9 @@ def _upload_redis(article: Article):
     if not result:
         logger.error(f"Failed to upload article {article.id} to Redis.")
         return result
-    result = redis_client.ft("articles").sugadd("articles", Suggestion(string=article.title, score=article_dict["date"]))
+    result = redis_client.ft("articles").sugadd(
+        "articles", Suggestion(string=article.title, score=article_dict["date"])
+    )
     if not result:
         logger.error(f"Failed to add suggestion for article {article.id} to Redis.")
         return result

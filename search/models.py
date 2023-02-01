@@ -106,4 +106,3 @@ class SearchResult(BaseModel):
     count: int
     results: list[Article]
     has_more: bool
-    

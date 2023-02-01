@@ -1,5 +1,5 @@
 from common.logs import logger
-from models import Article, SearchQuery, SearchResult
+from models import SearchQuery, SearchResult
 from redis_search import search_articles, suggest_articles
 
 

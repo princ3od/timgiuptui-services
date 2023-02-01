@@ -22,7 +22,9 @@ def search_articles(search_query: SearchQuery) -> list[Article]:
 
 
 def suggest_articles(query: str) -> list[str]:
-    results = redis_client.ft("articles").sugget("articles", query, fuzzy=len(query) > 3, num=8)
+    results = redis_client.ft("articles").sugget(
+        "articles", query, fuzzy=len(query) > 3, num=8
+    )
     return results
 
 

@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status
-from models import Order, SearchQuery, SortBy, Article, SearchResult
+from models import Order, SearchQuery, SearchResult, SortBy
 from provider import Provider
 
 app = FastAPI(
@@ -16,7 +16,9 @@ def health():
     return "OK"
 
 
-@app.get("/articles/search", status_code=status.HTTP_200_OK, response_model=SearchResult)
+@app.get(
+    "/articles/search", status_code=status.HTTP_200_OK, response_model=SearchResult
+)
 def fulltext_search_articles(
     query: str,
     limit: int = 10,
@@ -42,6 +44,8 @@ def fulltext_search_articles(
     return result
 
 
-@app.get("/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[str])
+@app.get(
+    "/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[str]
+)
 def get_autocomplete_suggestions(query: str):
     return provider.suggest(query)
