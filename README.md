@@ -1,13 +1,12 @@
 # Timgiuptui services
 
-Backend microservices for timgiuptui.com
+Event-driven microservices for [timgiuptui.com](https://timgiuptui.com).
 
 ## Tech stack
 
-Each service is a separate project, and each project is a separate git repository. They may use one or more of the following frameworks:
-
-- Flask
-- FastAPI
+- Frameworks: FastAPI, Flask
+- Database: Firestore
+- Event handling: Cloud Pub/Sub
 
 ## Installation
 
@@ -19,15 +18,10 @@ Generally, you need to install the following:
 - Docker
 - Docker Compose
 
-To run any service, you need to:
+For better development, you can install `shared` packages:
 
 ```bash
-
-# move to the service directory
-cd <service_name>
-
-docker-compose up -d
-
+pip install -e 'git+https://github.com/timgiuptui/timgiuptui-services.git@main#egg=common&subdirectory=share'
 ```
 
 ## Services
@@ -36,11 +30,6 @@ docker-compose up -d
 
 - API gateway
 - FastAPI
-
-### analytics
-
-- analyze metrics from crawled news
-- Flask
 
 ### crawler
 
@@ -66,3 +55,12 @@ docker-compose up -d
 
 - search articles
 - FastAPI
+
+### analytics
+
+- analyze metrics from crawled news
+- Flask
+
+## Diagrams
+
+// TBA
