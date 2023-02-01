@@ -1,11 +1,22 @@
 import datetime
 import json
+import os
 
-from init_redis_index import redis_client
+from dotenv import load_dotenv
+from redis import Redis
 from redis.commands.json.path import Path
+from redis.commands.search.suggestion import Suggestion
 from redis.commands.search.field import NumericField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
+
+load_dotenv("search/scripts/.env.local")
+
+redis_client = Redis(
+    host=os.environ["REDIS_HOST"],
+    port=int(os.environ["REDIS_PORT"]),
+    password=os.environ.get("REDIS_PASSWORD"),
+)
 
 books = []
 titles = [
@@ -27,6 +38,7 @@ for i in range(10):
 
 for index, book in enumerate(books):
     redis_client.json().set(f"books:{book['title']}", Path.rootPath(), book)
+    redis_client.ft("books").sugadd("books", Suggestion(book["title"]))
 
 try:
     schema = (
@@ -34,21 +46,22 @@ try:
         NumericField("$.date", as_name="date"),
     )
 
-    redis_client.ft("books").create_index(
-        schema, definition=IndexDefinition(prefix=["books:"], index_type=IndexType.JSON)
-    )
+    redis_client.ft("books").create_index(schema, definition=IndexDefinition(prefix=["books:"], index_type=IndexType.JSON))
 except Exception as e:
     print(e)
 
-term = "covid 19"
-fuzzy_term = "".join([f"%%{w}%%" for w in term.split(" ")])
+term = "Ch"
+fuzzy_term = "".join([f"%%{w}%%" for w in term.strip().split(" ")])
 print(fuzzy_term)
-query = bytes(fuzzy_term, "utf-8")
+query = bytes("Ch*", "utf-8")
 result = redis_client.ft("books").search(Query(query).with_scores())
 
-books = sorted(result.docs, key=lambda x: x.score)
+books = result.docs
 
 for book in books:
     _book = json.loads(book.json)
     score = book.score
     print(f"{_book['title']} - {score}")
+
+result = redis_client.ft("books").sugget("books", term, fuzzy=len(term) > 3, num=10)
+print(result)

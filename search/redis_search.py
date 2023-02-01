@@ -1,28 +1,34 @@
+import json
 import os
 
-from models import Article, Order, SearchQuery, SortBy
-from redis import Redis
+from redis import Redis, ConnectionPool
 from redis.commands.search.query import Query
 
-redis_client = Redis(
+from models import Article, Order, SearchQuery, SortBy
+from common.logs import logger
+
+
+connection_pool = ConnectionPool(
     host=os.environ["REDIS_HOST"],
     port=int(os.environ["REDIS_PORT"]),
     password=os.environ.get("REDIS_PASSWORD"),
 )
 
+redis_client = Redis(connection_pool=connection_pool,socket_timeout=30)
+
+
 
 def search_articles(search_query: SearchQuery) -> list[Article]:
-    for fuzzy_level in range(1, 3):
-        query = _build_query(search_query, fuzzy_level)
-        result = _search(query)
-        if len(result) > 0:
-            return result
-    return []
+    query = _build_query(search_query)
+    result = _search(query)
+    return result
 
 
-def _build_query(search_query: SearchQuery, fuzzy_level=1) -> Query:
-    fuzzy_term = search_query.build_fuzzy_term(fuzzy_level)
-    query: Query = Query(fuzzy_term)
+def _build_query(search_query: SearchQuery) -> Query:
+    term = search_query.build_term()
+    logger.info(f"Searching articles with term {term}")
+    query: Query = Query(term).with_scores()
+    query = query.highlight(tags=["<b>", "</b>"])
     query = query.paging(search_query.offset, search_query.limit)
     if search_query.sort_by == SortBy.date:
         is_asc = search_query.order == Order.asc
@@ -32,9 +38,10 @@ def _build_query(search_query: SearchQuery, fuzzy_level=1) -> Query:
 
 def _search(query: Query) -> list[Article]:
     result = redis_client.ft("articles").search(query)
-    docs = sorted(result.docs, key=lambda x: x.score)
+    docs = result.docs
     articles = []
     for doc in docs:
-        article = Article(**doc.json)
+        article = Article(**json.loads(doc.json))
         articles.append(article)
+        logger.info(f"Found article \"{article.title}\" with score {doc.score}")
     return articles

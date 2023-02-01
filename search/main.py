@@ -24,3 +24,17 @@ def get_user(request: Request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     articles = provider.search(query)
     return articles
+
+
+@app.get("/articles/autocomplete", status_code=status.HTTP_200_OK)
+def get_user(request: Request):
+    params = request.query_params
+    try:
+        query = SearchQuery(**params)
+        query.is_full_text = False
+        query.limit = 10
+        query.offset = 0
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    articles = provider.search(query)
+    return articles
