@@ -21,7 +21,7 @@ Generally, you need to install the following:
 For better development, you can install `shared` packages:
 
 ```bash
-pip install -e 'git+https://github.com/timgiuptui/timgiuptui-services.git@main#egg=common&subdirectory=share'
+pip install -e shared/
 ```
 
 ## Services
