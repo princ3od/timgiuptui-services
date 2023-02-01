@@ -2,7 +2,7 @@ from common.constants import PubSubTopic
 from common.event_handler import pubsub_publish
 from common.logs import logger
 from fastapi import FastAPI, HTTPException, status
-from models import Source
+from models import Source, Topic, Editor
 from provider import Provider
 
 app = FastAPI(
@@ -20,7 +20,7 @@ def health():
     return "OK"
 
 
-@app.get("/topics", status_code=status.HTTP_200_OK)
+@app.get("/topics", status_code=status.HTTP_200_OK, response_model=list[Topic])
 def get_topics():
     try:
         topics = provider.get_topics()
@@ -30,7 +30,7 @@ def get_topics():
         return []
 
 
-@app.get("/editors", status_code=status.HTTP_200_OK)
+@app.get("/editors", status_code=status.HTTP_200_OK, response_model=list[Editor])
 def get_editors():
     try:
         editors = provider.get_editors()
@@ -40,7 +40,7 @@ def get_editors():
         return []
 
 
-@app.post("/crawler/sources", status_code=status.HTTP_200_OK)
+@app.post("/crawler/sources", status_code=status.HTTP_200_OK, include_in_schema=False)
 def get_sources():
     sources: list[Source] = []
     try:

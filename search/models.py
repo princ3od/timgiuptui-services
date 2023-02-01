@@ -103,3 +103,10 @@ class SearchQuery(BaseModel):
         fuzzy_term = f"{fuzzy_term} {self.get_source_filter()}"
         fuzzy_term = fuzzy_term.strip()
         return fuzzy_term
+
+
+class SearchResult(BaseModel):
+    count: int
+    results: list[Article]
+    has_more: bool
+    

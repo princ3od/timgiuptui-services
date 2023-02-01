@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status
-from models import Order, SearchQuery, SortBy
+from models import Order, SearchQuery, SortBy, Article, SearchResult
 from provider import Provider
 
 app = FastAPI(
@@ -16,10 +16,7 @@ def health():
     return "OK"
 
 
-@app.get(
-    "/articles/search",
-    status_code=status.HTTP_200_OK,
-)
+@app.get("/articles/search", status_code=status.HTTP_200_OK, response_model=SearchResult)
 def fulltext_search_articles(
     query: str,
     limit: int = 10,
@@ -41,15 +38,15 @@ def fulltext_search_articles(
         )
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    articles = provider.search(query)
-    return articles
+    result = provider.search(query)
+    return result
 
 
-@app.get("/articles/autocomplete", status_code=status.HTTP_200_OK)
+@app.get("/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[Article])
 def get_autocomplete_suggestions(query: str):
     try:
-        query = SearchQuery(query=query, is_full_text=False, limit=10)
+        query = SearchQuery(query=query, is_full_text=False, limit=8)
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    articles = provider.search(query)
-    return articles
+    result: SearchResult = provider.search(query)
+    return result.results
