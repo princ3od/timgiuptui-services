@@ -1,6 +1,6 @@
 from common.logs import logger
 from models import Article, SearchQuery, SearchResult
-from redis_search import search_articles
+from redis_search import search_articles, suggest_articles
 
 
 class Provider:
@@ -13,3 +13,9 @@ class Provider:
             count=len(articles),
             has_more=len(articles) < searh_query.limit,
         )
+
+    def suggest(self, query: str) -> list[str]:
+        logger.info(f"Suggesting articles with query {query}")
+        suggestions = suggest_articles(query)
+        logger.info(f"Found {len(suggestions)} suggestions.")
+        return suggestions

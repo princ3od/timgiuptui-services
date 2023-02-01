@@ -47,7 +47,6 @@ class SearchQuery(BaseModel):
     order: Optional[Order] = Order.desc
     sources: Optional[list[str]] = None
     topics: Optional[list[str]] = None
-    is_full_text: Optional[bool] = True
 
     @root_validator(pre=True)
     def validate_query(cls, values):
@@ -87,8 +86,6 @@ class SearchQuery(BaseModel):
         return f"@source:{sources}"
 
     def build_term(self):
-        if not self.is_full_text:
-            return f"@title:{self.query}* {self.get_topic_filter()} {self.get_source_filter()}".strip()
         fuzzy_sign = ["%", "%%", "%%%"]
         fuzzy_terms = [self.query]
         for i in range(0, 1):

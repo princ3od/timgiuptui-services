@@ -6,6 +6,7 @@ from database import firestore_db, redis_client
 from datetime_normalizer import normalize_article_datetime
 from models import Article, ArticlesFromCrawler
 from redis.commands.json.path import Path
+from redis.commands.search.suggestion import Suggestion
 
 
 def upload_articles(data: ArticlesFromCrawler):
@@ -53,6 +54,10 @@ def _upload_redis(article: Article):
     )
     if not result:
         logger.error(f"Failed to upload article {article.id} to Redis.")
+        return result
+    result = redis_client.ft("articles").sugadd("articles", Suggestion(string=article.title, score=article_dict["date"]))
+    if not result:
+        logger.error(f"Failed to add suggestion for article {article.id} to Redis.")
         return result
     result = redis_client.expire(
         f"articles:{article.id}", REDIS_EXPRIRED_TIME_IN_SECONDS

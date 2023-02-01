@@ -42,11 +42,6 @@ def fulltext_search_articles(
     return result
 
 
-@app.get("/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[Article])
+@app.get("/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[str])
 def get_autocomplete_suggestions(query: str):
-    try:
-        query = SearchQuery(query=query, is_full_text=False, limit=8)
-    except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    result: SearchResult = provider.search(query)
-    return result.results
+    return provider.suggest(query)

@@ -21,6 +21,11 @@ def search_articles(search_query: SearchQuery) -> list[Article]:
     return result
 
 
+def suggest_articles(query: str) -> list[str]:
+    results = redis_client.ft("articles").sugget("articles", query, fuzzy=len(query) > 3, num=8)
+    return results
+
+
 def _build_query(search_query: SearchQuery) -> Query:
     term = search_query.build_term()
     logger.info(f"Searching articles with term {term}")
