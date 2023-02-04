@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
 from models import Order, SearchQuery, SearchResult, SortBy
+from starlette.middleware.cors import CORSMiddleware
 from provider import Provider
 
 app = FastAPI(
@@ -8,6 +9,8 @@ app = FastAPI(
     description="Search service documentation",
     swagger_ui_parameters={"displayRequestDuration": True},
 )
+app.add_middleware(CORSMiddleware, allow_origins=["*"])
+
 provider = Provider()
 
 
@@ -20,7 +23,7 @@ def health():
     "/articles/search", status_code=status.HTTP_200_OK, response_model=SearchResult
 )
 def fulltext_search_articles(
-    query: str,
+    q: str,
     limit: int = 10,
     offset: int = 0,
     sort_by: SortBy = SortBy.relevance,
@@ -29,8 +32,8 @@ def fulltext_search_articles(
     topics: str = None,
 ):
     try:
-        query = SearchQuery(
-            query=query,
+        q = SearchQuery(
+            query=q,
             limit=limit,
             offset=offset,
             sort_by=sort_by,
@@ -40,12 +43,12 @@ def fulltext_search_articles(
         )
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    result = provider.search(query)
+    result = provider.search(q)
     return result
 
 
 @app.get(
     "/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[str]
 )
-def get_autocomplete_suggestions(query: str):
-    return provider.suggest(query)
+def get_autocomplete_suggestions(q: str):
+    return provider.suggest(q)
