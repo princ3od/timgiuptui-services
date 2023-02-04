@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
 from models import Order, SearchQuery, SearchResult, SortBy
-from starlette.middleware.cors import CORSMiddleware
 from provider import Provider
+from starlette.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     version="0.1.0",
