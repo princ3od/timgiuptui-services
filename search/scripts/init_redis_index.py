@@ -16,7 +16,7 @@ redis_client = Redis(
 redis_client.ft("articles").dropindex()
 
 schema = (
-    TextField("$.title", as_name="title"),
+    TextField("$.title", as_name="title", weight=10.0),
     TextField("$.description", as_name="description"),
     NumericField("$.date", as_name="date"),
     TextField("$.topic", as_name="topic"),
