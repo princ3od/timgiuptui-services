@@ -4,11 +4,17 @@ from provider import Provider
 from fastapi_gateway import route
 from starlette.requests import Request
 from starlette.responses import Response
-from typing import Optional
+from starlette.middleware.cors import CORSMiddleware
 
 from constants import SEARCH_SERVICE_URL, PLATFORM_SERVICE_URL
 
-app = FastAPI(version="0.1.0", title="Timgiuptui API", description="Timgiuptui API documentation")
+app = FastAPI(
+    version="0.1.0",
+    title="Timgiuptui API",
+    description="Timgiuptui API documentation",
+    swagger_ui_parameters={"displayRequestDuration": True},
+)
+app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 provider = Provider()
 
