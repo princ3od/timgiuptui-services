@@ -1,7 +1,6 @@
 from enum import Enum
-from datetime import datetime
-from pydantic import BaseModel, root_validator
-from common.logs import logger
+
+from pydantic import BaseModel
 
 
 class SortBy(str, Enum):

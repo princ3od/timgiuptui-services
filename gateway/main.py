@@ -1,12 +1,11 @@
-from fastapi import FastAPI, HTTPException, status
-from models import SearchResult, SortBy, Order, Topic, Editor
-from provider import Provider
+from constants import PLATFORM_SERVICE_URL, SEARCH_SERVICE_URL
+from fastapi import FastAPI, status
 from fastapi_gateway import route
+from models import Editor, Order, SearchResult, SortBy, Topic
+from provider import Provider
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
-from starlette.middleware.cors import CORSMiddleware
-
-from constants import SEARCH_SERVICE_URL, PLATFORM_SERVICE_URL
 
 app = FastAPI(
     version="0.1.0",
