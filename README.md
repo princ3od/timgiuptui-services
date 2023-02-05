@@ -24,6 +24,20 @@ For better development, you can install `shared` packages:
 pip install -e shared/
 ```
 
+## Diagrams
+
+### System Design  
+
+![overall](https://user-images.githubusercontent.com/17960926/216836815-5dcb7527-6714-4103-9561-77a1d77e062f.png)
+
+### Crawling Process  
+
+![crawling-proccess](https://user-images.githubusercontent.com/17960926/216836847-6a86d51c-6784-496b-85ee-d0eef360801a.png)
+
+### CI/CD Flow  
+
+![cicd-flow](https://user-images.githubusercontent.com/17960926/216836862-a5dc2893-9477-4306-9389-0b53b238aa5e.png)
+
 ## Services
 
 ### gateway
@@ -60,7 +74,3 @@ pip install -e shared/
 
 - analyze metrics from crawled news
 - Flask
-
-## Diagrams
-
-// TBA
