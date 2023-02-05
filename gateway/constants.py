@@ -7,3 +7,7 @@ SEARCH_SERVICE_URL = os.getenv(
 PLATFORM_SERVICE_URL = os.getenv(
     "PLATFORM_SERVICE_URL", "https://platform-rtfemypala-as.a.run.app"
 )
+
+ARTICLES_SERVICE_URL = os.getenv(
+    "ARTICLES_SERVICE_URL", "https://articles-rtfemypala-as.a.run.app"
+)

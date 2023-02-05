@@ -1,7 +1,7 @@
-from constants import PLATFORM_SERVICE_URL, SEARCH_SERVICE_URL
+from constants import PLATFORM_SERVICE_URL, SEARCH_SERVICE_URL, ARTICLES_SERVICE_URL
 from fastapi import FastAPI, status
 from fastapi_gateway import route
-from models import Editor, Order, SearchResult, SortBy, Topic
+from models import Editor, Order, SearchResult, SortBy, Topic, Article, SimilarArticle
 from provider import Provider
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -87,3 +87,30 @@ def get_topics(request: Request, response: Response):
 )
 def get_sources(request: Request, response: Response):
     pass
+
+
+@route(
+    request_method=app.get,
+    service_url=ARTICLES_SERVICE_URL,
+    gateway_path="/articles/{id}",
+    service_path="/articles/{id}",
+    status_code=status.HTTP_200_OK,
+    tags=["Articles Service"],
+    response_model=Article,
+)
+def get_article(request: Request, response: Response, id: str):
+    pass
+
+
+@route(
+    request_method=app.get,
+    service_url=ARTICLES_SERVICE_URL,
+    gateway_path="/articles/{id}/similar",
+    service_path="/articles/{id}/similar",
+    status_code=status.HTTP_200_OK,
+    tags=["Articles Service"],
+    response_model=list[SimilarArticle],
+)
+def get_similar_articles_of(request: Request, response: Response, id: str):
+    pass
+
