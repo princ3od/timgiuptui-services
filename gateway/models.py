@@ -1,8 +1,44 @@
-from pydantic import BaseModel
+from enum import Enum
+from datetime import datetime
+from pydantic import BaseModel, root_validator
+from common.logs import logger
 
 
-class User(BaseModel):
-    id: int
+class SortBy(str, Enum):
+    date = "date"
+    relevance = "relevance"
+
+
+class Order(str, Enum):
+    asc = "asc"
+    desc = "desc"
+
+
+class Article(BaseModel):
+    id: str
+    title: str
+    url: str
+    topic: str
+    source: str
+    description: str
+    thumbnail: str
+    date: str
+
+
+class SearchResult(BaseModel):
+    count: int
+    results: list[Article]
+    has_more: bool
+
+
+class Topic(BaseModel):
+    id: str
+    ordinal: int
     name: str
-    email: str
-    password: str
+
+
+class Editor(BaseModel):
+    id: str
+    name: str
+    logo: str
+    slogan: str

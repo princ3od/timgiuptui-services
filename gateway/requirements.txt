@@ -1,2 +1,4 @@
 fastapi==0.89.0
 uvicorn[standard]==0.20.0
+-e git+https://github.com/xitowzys-ISZF/fastapi-gateway.git@master#egg=fastapi_gateway
+-e git+https://github.com/timgiuptui/timgiuptui-services.git@main#egg=common&subdirectory=shared
