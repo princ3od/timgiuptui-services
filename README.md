@@ -1,12 +1,13 @@
 # Timgiuptui services
 
-Event-driven microservices for [timgiuptui.com](https://timgiuptui.com).
+Event-driven microservices for [timgiuptui.com](https://timgiuptui.com). All stacks are deployed on Google Cloud Platform.
 
 ## Tech stack
 
 - Frameworks: FastAPI, Flask
 - Database: Firestore
 - Event handling: Cloud Pub/Sub
+- Cronjob: Cloud Scheduler
 
 ## Installation
 
