@@ -1,6 +1,7 @@
+from datetime import datetime
 from enum import Enum
 from typing import Optional
-from datetime import datetime
+
 from pydantic import BaseModel, root_validator
 
 
@@ -73,7 +74,9 @@ class Article(BaseModel):
     def validate_similar_articles(cls, values):
         similar_articles = values.get("similar_articles")
         if similar_articles:
-            values["similar_articles"] = {k: SimilarArticle(**v) for k, v in similar_articles.items()}
+            values["similar_articles"] = {
+                k: SimilarArticle(**v) for k, v in similar_articles.items()
+            }
         return values
 
     class Config:

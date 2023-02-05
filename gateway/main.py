@@ -1,7 +1,9 @@
-from constants import PLATFORM_SERVICE_URL, SEARCH_SERVICE_URL, ARTICLES_SERVICE_URL
+from constants import (ARTICLES_SERVICE_URL, PLATFORM_SERVICE_URL,
+                       SEARCH_SERVICE_URL)
 from fastapi import FastAPI, status
 from fastapi_gateway import route
-from models import Editor, Order, SearchResult, SortBy, Topic, Article, SimilarArticle
+from models import (Article, Editor, Order, SearchResult, SimilarArticle,
+                    SortBy, Topic)
 from provider import Provider
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -113,4 +115,3 @@ def get_article(request: Request, response: Response, id: str):
 )
 def get_similar_articles_of(request: Request, response: Response, id: str):
     pass
-

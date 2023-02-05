@@ -1,6 +1,8 @@
 from datetime import datetime
-from pydantic import BaseModel, root_validator
 from typing import Optional
+
+from pydantic import BaseModel, root_validator
+
 
 class SimilarArticle(BaseModel):
     id: Optional[str]
@@ -35,7 +37,7 @@ class Article(BaseModel):
                 k: SimilarArticle(**v) for k, v in similar_articles.items()
             }
         return values
-    
+
     class Config:
         json_encoders = {
             datetime: lambda dt: dt.isoformat(),

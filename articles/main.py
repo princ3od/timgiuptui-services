@@ -16,12 +16,21 @@ def health():
 def get_article(id: str):
     article = provider.get(id)
     if article is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Article not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Article not found"
+        )
     return article
 
-@app.get("/articles/{id}/similar", status_code=status.HTTP_200_OK, response_model=list[SimilarArticle])
+
+@app.get(
+    "/articles/{id}/similar",
+    status_code=status.HTTP_200_OK,
+    response_model=list[SimilarArticle],
+)
 def get_article(id: str):
     similar_articles = provider.get_similar_articles_of(id)
     if similar_articles is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Article not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Article not found"
+        )
     return similar_articles
