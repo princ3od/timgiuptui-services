@@ -29,7 +29,7 @@ pip install -e shared/
 
 ### System Design  
 
-![overall](https://user-images.githubusercontent.com/17960926/216836815-5dcb7527-6714-4103-9561-77a1d77e062f.png)
+![image](https://user-images.githubusercontent.com/17960926/218121122-34a23910-a691-4c58-9fac-080184df2acf.png)
 
 ### Crawling Process  
 
