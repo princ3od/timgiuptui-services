@@ -29,15 +29,6 @@ class Article(BaseModel):
     thumbnail: str
     date: str
 
-    @root_validator(pre=True)
-    def validate_query(cls, values):
-        try:
-            date_timestamp = values.get("date")
-            values["date"] = datetime.fromtimestamp(int(date_timestamp)).isoformat()
-        except Exception as e:
-            logger.error(f"Error parsing date {date_timestamp}: {e}")
-        return values
-
 
 class SearchQuery(BaseModel):
     query: str
@@ -64,13 +55,9 @@ class SearchQuery(BaseModel):
         if "offset" in values and int(values["offset"]) < 0:
             raise ValueError("Offset must be greater than 0")
         if "sources" in values and values["sources"] is not None:
-            values["sources"] = [
-                _remove_special_chars(source) for source in values["sources"].split(",")
-            ]
+            values["sources"] = [_remove_special_chars(source) for source in values["sources"].split(",")]
         if "topics" in values and values["topics"] is not None:
-            values["topics"] = [
-                _remove_special_chars(topic) for topic in values["topics"].split(",")
-            ]
+            values["topics"] = [_remove_special_chars(topic) for topic in values["topics"].split(",")]
         return values
 
     def get_topic_filter(self):
@@ -89,10 +76,7 @@ class SearchQuery(BaseModel):
         fuzzy_sign = ["%", "%%", "%%%"]
         fuzzy_terms = [self.query]
         for i in range(0, 1):
-            fuzzy_words = [
-                f"{fuzzy_sign[i]}{word}{fuzzy_sign[i]}"
-                for word in self.query.split(" ")
-            ]
+            fuzzy_words = [f"{fuzzy_sign[i]}{word}{fuzzy_sign[i]}" for word in self.query.split(" ")]
             fuzzy_term = " ".join(fuzzy_words)
             fuzzy_terms.append(fuzzy_term)
         fuzzy_term = " | ".join(fuzzy_terms)
