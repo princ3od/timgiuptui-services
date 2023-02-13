@@ -2,10 +2,9 @@ import json
 import os
 
 from common.logs import logger
+from models import Order, SearchQuery, SimpleArticle, SortBy
 from redis import ConnectionPool, Redis
 from redis.commands.search.query import Query
-
-from models import Order, SearchQuery, SimpleArticle, SortBy
 
 connection_pool = ConnectionPool(
     host=os.environ["REDIS_HOST"],

@@ -1,7 +1,6 @@
 from typing import Optional
 
 from common.logs import logger
-
 from database import firestore_db
 from models import Article, SearchQuery, SearchResult, SimilarArticle
 from redis_search import search_articles, suggest_articles

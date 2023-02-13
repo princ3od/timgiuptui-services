@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
-
-from models import Article, Order, SearchQuery, SearchResult, SimilarArticle, SortBy
+from models import (Article, Order, SearchQuery, SearchResult, SimilarArticle,
+                    SortBy)
 from provider import Provider
 
 app = FastAPI(version="0.1.0", title="FastAPI", description="FastAPI example")

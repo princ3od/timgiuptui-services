@@ -1,9 +1,7 @@
 import re
-from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from common.logs import logger
 from pydantic import BaseModel, root_validator
 
 _special_chars_re = r"(\'|\"|\.|\,|\;|\<|\>|\{|\}|\[|\]|\"|\'|\=|\~|\*|\:|\#|\+|\^|\$|\@|\%|\!|\&|\)|\(|/|\-|\\)"
@@ -55,9 +53,13 @@ class SearchQuery(BaseModel):
         if "offset" in values and int(values["offset"]) < 0:
             raise ValueError("Offset must be greater than 0")
         if "sources" in values and values["sources"] is not None:
-            values["sources"] = [_remove_special_chars(source) for source in values["sources"].split(",")]
+            values["sources"] = [
+                _remove_special_chars(source) for source in values["sources"].split(",")
+            ]
         if "topics" in values and values["topics"] is not None:
-            values["topics"] = [_remove_special_chars(topic) for topic in values["topics"].split(",")]
+            values["topics"] = [
+                _remove_special_chars(topic) for topic in values["topics"].split(",")
+            ]
         return values
 
     def get_topic_filter(self):
@@ -76,7 +78,10 @@ class SearchQuery(BaseModel):
         fuzzy_sign = ["%", "%%", "%%%"]
         fuzzy_terms = [self.query]
         for i in range(0, 1):
-            fuzzy_words = [f"{fuzzy_sign[i]}{word}{fuzzy_sign[i]}" for word in self.query.split(" ")]
+            fuzzy_words = [
+                f"{fuzzy_sign[i]}{word}{fuzzy_sign[i]}"
+                for word in self.query.split(" ")
+            ]
             fuzzy_term = " ".join(fuzzy_words)
             fuzzy_terms.append(fuzzy_term)
         fuzzy_term = " | ".join(fuzzy_terms)

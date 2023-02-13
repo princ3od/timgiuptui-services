@@ -1,7 +1,8 @@
 from constants import ARTICLES_SERVICE_URL, PLATFORM_SERVICE_URL
 from fastapi import FastAPI, status
 from fastapi_gateway import route
-from models import Article, Editor, Order, SearchResult, SimilarArticle, SortBy, Topic
+from models import (Article, Editor, Order, SearchResult, SimilarArticle,
+                    SortBy, Topic)
 from provider import Provider
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
