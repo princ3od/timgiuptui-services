@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
-from models import Article, SimilarArticle
+
+from models import Article, Order, SearchQuery, SearchResult, SimilarArticle, SortBy
 from provider import Provider
 
 app = FastAPI(version="0.1.0", title="FastAPI", description="FastAPI example")
@@ -10,6 +11,41 @@ provider = Provider()
 @app.get("/", status_code=status.HTTP_200_OK)
 def health():
     return "OK"
+
+
+@app.get(
+    "/articles/search", status_code=status.HTTP_200_OK, response_model=SearchResult
+)
+def fulltext_search_articles(
+    q: str,
+    limit: int = 10,
+    offset: int = 0,
+    sort_by: SortBy = SortBy.relevance,
+    order: Order = Order.desc,
+    sources: str = None,
+    topics: str = None,
+):
+    try:
+        q = SearchQuery(
+            query=q,
+            limit=limit,
+            offset=offset,
+            sort_by=sort_by,
+            order=order,
+            sources=sources,
+            topics=topics,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    result = provider.search(q)
+    return result
+
+
+@app.get(
+    "/articles/autocomplete", status_code=status.HTTP_200_OK, response_model=list[str]
+)
+def get_autocomplete_suggestions(q: str):
+    return provider.suggest(q)
 
 
 @app.get("/articles/{id}", status_code=status.HTTP_200_OK, response_model=Article)

@@ -1,9 +1,7 @@
-from constants import (ARTICLES_SERVICE_URL, PLATFORM_SERVICE_URL,
-                       SEARCH_SERVICE_URL)
+from constants import ARTICLES_SERVICE_URL, PLATFORM_SERVICE_URL
 from fastapi import FastAPI, status
 from fastapi_gateway import route
-from models import (Article, Editor, Order, SearchResult, SimilarArticle,
-                    SortBy, Topic)
+from models import Article, Editor, Order, SearchResult, SimilarArticle, SortBy, Topic
 from provider import Provider
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -27,7 +25,7 @@ def health():
 
 @route(
     request_method=app.get,
-    service_url=SEARCH_SERVICE_URL,
+    service_url=ARTICLES_SERVICE_URL,
     gateway_path="/articles/search",
     service_path="/articles/search",
     query_params=["q", "offset", "limit", "sort_by", "order", "sources", "topics"],
@@ -51,7 +49,7 @@ def fulltext_search_articles(
 
 @route(
     request_method=app.get,
-    service_url=SEARCH_SERVICE_URL,
+    service_url=ARTICLES_SERVICE_URL,
     gateway_path="/articles/autocomplete",
     service_path="/articles/autocomplete",
     query_params=["q"],
