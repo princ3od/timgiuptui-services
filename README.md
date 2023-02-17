@@ -1,5 +1,9 @@
 # Timgiuptui services
 
+<img src="./logo.png" alt="timgiuptui"
+style="background-color: #fff; border-radius: 16px" width="96" height="96" />
+
+
 Event-driven microservices for [timgiuptui.com](https://timgiuptui.com). All stacks are deployed on Google Cloud Platform.
 
 ## Tech stack
