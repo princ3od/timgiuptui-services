@@ -1,4 +1,3 @@
-import re
 from datetime import datetime
 from enum import Enum
 from typing import Optional
@@ -45,7 +44,6 @@ class Article(BaseModel):
         json_encoders = {
             datetime: lambda dt: dt.isoformat(),
         }
-
 
 
 class SortBy(str, Enum):

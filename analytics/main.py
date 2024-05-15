@@ -12,7 +12,6 @@ def health():
     return "OK", 200
 
 
-
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
     user = provider.get(user_id)

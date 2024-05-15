@@ -61,7 +61,5 @@ def _upload_redis(article: Article):
     if not result:
         logger.error(f"Failed to add suggestion for article {article.id} to Redis.")
         return result
-    redis_client.expire(
-        f"articles:{article.id}", REDIS_EXPRIRED_TIME_IN_SECONDS
-    )
+    redis_client.expire(f"articles:{article.id}", REDIS_EXPRIRED_TIME_IN_SECONDS)
     return True

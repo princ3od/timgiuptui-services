@@ -46,7 +46,5 @@ def update_user(user_id: int, user: User):
 def delete_user(user_id: int):
     user = provider.get(user_id)
     if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Error"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Error")
     provider.delete(user_id)
