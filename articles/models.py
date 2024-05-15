@@ -47,8 +47,6 @@ class Article(BaseModel):
         }
 
 
-_special_chars_re = r"(\'|\"|\.|\,|\;|\<|\>|\{|\}|\[|\]|\"|\'|\=|\~|\*|\:|\#|\+|\^|\$|\@|\%|\!|\&|\)|\(|/|\-|\\)"
-
 
 class SortBy(str, Enum):
     date = "date"
@@ -95,7 +93,7 @@ class SearchQuery(BaseModel):
             query = query.strip()
             while "  " in query:
                 query = query.replace("  ", " ")
-            return re.sub(_special_chars_re, "", query)
+            return query
 
         if "query" not in values:
             raise ValueError("Query is required")

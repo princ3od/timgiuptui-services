@@ -10,7 +10,7 @@ from scrapy_crawler.spiders.tuoitre import TuoiTreSpider
 from scrapy_crawler.spiders.vnexpress import VnExpressSpider
 
 
-def main_local(*args, **kwargs):
+def main_local():
     start_time = timeit.default_timer()
     print(">> Start crawling...", flush=True)
 

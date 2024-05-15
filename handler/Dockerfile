@@ -2,7 +2,8 @@ FROM python:3.10
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y git
+    apt-get install -y git && \
+    apt-get clean
 
 WORKDIR /app
 
@@ -16,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
+CMD exec gunicorn --bind :"$PORT" --workers 1 --threads 8 --timeout 0 main:app

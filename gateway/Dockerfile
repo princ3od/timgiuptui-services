@@ -2,7 +2,8 @@ FROM python:3.10-slim
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y git
+    apt-get install -y git && \
+    apt-get clean
 
 WORKDIR /app
 

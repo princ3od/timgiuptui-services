@@ -11,13 +11,14 @@ def normalize_article_datetime(article: Article):
     article.accessed_date = datetime.fromisoformat(article.accessed_date)
     article.read_time_minutes = _get_read_time_minutes(article.content)
 
+TIMEZONE7 = "+07:00"
 
 def _ensure_correct_timezone(date: str):
     """Checks if the datetime is in UTC timezone."""
     if date.endswith("-07:00"):
-        return date.replace("-07:00", "+07:00")
-    if not date.endswith("+07:00"):
-        return date + "+07:00"
+        return date.replace("-07:00", TIMEZONE7)
+    if not date.endswith(TIMEZONE7):
+        return date + TIMEZONE7
     return date
 
 

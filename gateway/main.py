@@ -45,7 +45,7 @@ def fulltext_search_articles(
     sources: str = None,
     topics: str = None,
 ):
-    pass
+    return
 
 
 @route(
@@ -59,7 +59,7 @@ def fulltext_search_articles(
     response_model=list[str],
 )
 def get_autocomplete_suggestions(request: Request, response: Response, q: str):
-    pass
+    return
 
 
 @route(
@@ -73,7 +73,7 @@ def get_autocomplete_suggestions(request: Request, response: Response, q: str):
     response_model=list[Topic],
 )
 def get_topics(request: Request, response: Response):
-    pass
+    return
 
 
 @route(
@@ -87,7 +87,7 @@ def get_topics(request: Request, response: Response):
     response_model=list[Editor],
 )
 def get_sources(request: Request, response: Response):
-    pass
+    return
 
 
 @route(
@@ -100,7 +100,7 @@ def get_sources(request: Request, response: Response):
     response_model=Article,
 )
 def get_article(request: Request, response: Response, id: str):
-    pass
+    return
 
 
 @route(
@@ -113,4 +113,4 @@ def get_article(request: Request, response: Response, id: str):
     response_model=list[SimilarArticle],
 )
 def get_similar_articles_of(request: Request, response: Response, id: str):
-    pass
+    return

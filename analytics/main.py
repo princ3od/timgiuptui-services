@@ -12,6 +12,7 @@ def health():
     return "OK", 200
 
 
+
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
     user = provider.get(user_id)
@@ -32,7 +33,7 @@ def create_user(user: User):
 def update_user(user_id: int, user: User):
     _user = provider.get(user_id)
     if _user is None:
-        return {"message": "User not found"}, 404
+        return {"message": "Error user not existed"}, 404
     return provider.update(user_id, user), 200
 
 
@@ -40,6 +41,6 @@ def update_user(user_id: int, user: User):
 def delete_user(user_id: int):
     user = provider.get(user_id)
     if user is None:
-        return {"message": "User not found"}, 404
+        return {"message": "Error"}, 404
     provider.delete(user_id)
     return Response(status=204)
