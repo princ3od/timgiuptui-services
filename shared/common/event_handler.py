@@ -6,7 +6,7 @@ from common.logs import logger
 from google.cloud.pubsub_v1 import PublisherClient
 
 
-def pubsub_publish(topic: PubSubTopic, data: dict):
+def pubsub_publish(topic: PubSubTopic, data):
     publisher = PublisherClient()
     topic_path = publisher.topic_path(PROJECT_ID, topic.value)
     str_data = json.dumps(
